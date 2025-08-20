@@ -1,6 +1,6 @@
 # AI Real Estate Agent Team for Bangladeshi Market
 
-![AI Real Estate Agent](https://i.imgur.com/placeholder.png)
+![AI Real Estate Agent]
 
 This application helps users find properties in Bangladesh by leveraging multiple AI agents that search, analyze, and evaluate properties from major Bangladeshi real estate websites.
 
