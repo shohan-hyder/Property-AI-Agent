@@ -24,7 +24,7 @@ class PropertyDetails(BaseModel):
     price: Optional[str] = Field(description="Property price in BDT")
     bedrooms: Optional[str] = Field(description="Number of bedrooms (e.g., '3 বেডরুম')")
     bathrooms: Optional[str] = Field(description="Number of bathrooms")
-    area: Optional[str] = Field(description="Property area in katha/sft (e.g., '1200 sft' or '5 katha')")
+    area: Optional[str] = Field(description="Property area in katha/sft (e.g., '1200 sft' or '5 কাঠা')")
     property_type: Optional[str] = Field(description="Type of property (e.g., 'ফ্ল্যাট', 'জমি', 'বাড়ি')")
     location_type: Optional[str] = Field(description="Location type (e.g., 'সিটি কর্পোরেশন', 'উপজেলা')")
     description: Optional[str] = Field(description="Property description in Bengali/English")
@@ -104,12 +104,12 @@ class BangladeshiPropertyAgent:
         
         # Create URLs for selected Bangladeshi property websites
         search_urls = {
-            "Bikroy.com": f"https://www.bikroy.com/bn/ads/{location}/properties",
             "Bproperty.com": f"https://www.bproperty.com/en/{location}/properties-for-sale/",
-            "AmarBari.com": f"https://www.amarbari.com/{location}/",
-            "Bdproperty.com": f"https://www.bdproperty.com/{location}/properties/",
-            "Chaldal Property": f"https://property.chaldal.com/{location}",
-            "ShareBazar": f"https://www.sharebazar.com.bd/{location}/properties"
+            "Bdhousing.com": f"https://www.bdhousing.com/search?location={location}&type={user_criteria.get('property_type', 'all')}&purpose={user_criteria.get('listing_type', 'sale')}",
+            "Bestbari.com": f"https://bestbari.com/{location}/",
+            "Aabason.com": f"https://aabason.com/{location}/",
+            "Apexproperty.com.bd": f"https://www.apexproperty.com.bd/{location}/",
+            "TheTolet.com": f"https://www.thetolet.com/{location}/"
         }
         
         # Filter URLs based on selected websites
@@ -119,7 +119,7 @@ class BangladeshiPropertyAgent:
         print(f"URLs to search: {urls_to_search}")
         
         if not urls_to_search:
-            return {"error": "কোনো ওয়েবসাইট নির্বাচন করা হয়নি। অন্তত একটি বাংলাদেশী প্রপার্টি ওয়েবসাইট নির্বাচন করুন (Bikroy, Bproperty, AmarBari, Bdproperty)"}
+            return {"error": "কোনো ওয়েবসাইট নির্বাচন করা হয়নি। অন্তত একটি বাংলাদেশী প্রপার্টি ওয়েবসাইট নির্বাচন করুন (Bproperty, Bdhousing, Bestbari, Aabason, Apexproperty, TheTolet)"}
         
         # Create comprehensive prompt with Bangladeshi property specifics
         prompt = f"""আপনি বাংলাদেশী রিয়েল এস্টেট ওয়েবসাইট থেকে প্রপার্টি তথ্য বের করছেন। পৃষ্ঠায় যতগুলো প্রপার্টি লিস্টিং আছে সবগুলো বের করুন।
@@ -157,7 +157,7 @@ class BangladeshiPropertyAgent:
    - JSON রিটার্ন করুন যাতে "properties" অ্যারে থাকবে
    - প্রতিটি প্রপার্টি একটি পূর্ণাঙ্গ অবজেক্ট হবে
    - "total_count" সেট করুন বের করা প্রপার্টি সংখ্যা অনুযায়ী
-   - "source_website" সেট করুন মূল ওয়েবসাইটের নাম অনুযায়ী (Bikroy/Bproperty/AmarBari/Bdproperty)
+   - "source_website" সেট করুন মূল ওয়েবসাইটের নাম অনুযায়ী (Bproperty/Bdhousing/Bestbari/Aabason/Apexproperty/TheTolet)
 
 প্রতিটি দৃশ্যমান প্রপার্টি লিস্টিং বের করুন - কেবল কয়েকটির জন্য সীমিত করবেন না!
         """
@@ -208,7 +208,7 @@ class BangladeshiPropertyAgent:
                 4. এক্সট্র্যাকশন প্রম্পট ওয়েবসাইটের জন্য পরিমার্জিত দরকার
                 
                 সমাধানের পরামর্শ:
-                - ভিন্ন ওয়েবসাইট চেষ্টা করুন (Bikroy, Bproperty, AmarBari, Bdproperty)
+                - ভিন্ন ওয়েবসাইট চেষ্টা করুন (Bproperty, Bdhousing, Bestbari, Aabason, Apexproperty, TheTolet)
                 - অনুসন্ধান মানদণ্ড প্রসারিত করুন (যেকোনো বেডরুম, যেকোনো ধরণ, ইত্যাদি)
                 - চেক করুন ওয়েবসাইট কি নির্দিষ্ট ইউজার ইন্টারঅ্যাকশন প্রয়োজন করে
                 
@@ -664,8 +664,8 @@ def main():
         # Website selection
         with st.expander("🌐 অনুসন্ধান উৎস", expanded=True):
             st.markdown("**বাংলাদেশী প্রপার্টি ওয়েবসাইট নির্বাচন করুন:**")
-            available_websites = ["Bikroy.com", "Bproperty.com", "AmarBari.com", "Bdproperty.com", "Chaldal Property", "ShareBazar"]
-            selected_websites = [site for site in available_websites if st.checkbox(site, value=site in ["Bikroy.com", "Bproperty.com"])]
+            available_websites = ["Bproperty.com", "Bdhousing.com", "Bestbari.com", "Aabason.com", "Apexproperty.com.bd", "TheTolet.com"]
+            selected_websites = [site for site in available_websites if st.checkbox(site, value=site in ["Bproperty.com", "Bdhousing.com"])]
             
             if selected_websites:
                 st.markdown(f'✅ {len(selected_websites)} টি উৎস নির্বাচিত', unsafe_allow_html=True)
@@ -725,23 +725,30 @@ def main():
         col1, col2, col3 = st.columns(3)
         
         with col1:
+            listing_type = st.selectbox(
+                "🛒 লিস্টিং ধরণ",
+                ["বিক্রয়", "ভাড়া"],
+                help="আপনি কি কিনতে চান নাকি ভাড়া নিতে চান?"
+            )
             property_type = st.selectbox(
                 "🏠 প্রপার্টির ধরণ",
                 ["যেকোনো", "ফ্ল্যাট", "বাড়ি", "জমি", "অফিস", "দোকান"],
                 help="আপনি যে ধরণের প্রপার্টি খুঁজছেন"
             )
+        
+        with col2:
             bedrooms = st.selectbox(
                 "🛏️ বেডরুম",
                 ["যেকোনো", "১", "২", "৩", "৪", "৫+"],
                 help="প্রয়োজনীয় বেডরুম সংখ্যা"
             )
-        
-        with col2:
             bathrooms = st.selectbox(
                 "🚿 বাথরুম",
-                ["যেকোনো", "১", "১.৫", "২", "২.৫", "৩", "৩.৫", "৪+"],
+                ["যেকোনো", "১", "২", "৩", "৪", "৫+"],
                 help="প্রয়োজনীয় বাথরুম সংখ্যা"
             )
+        
+        with col3:
             min_area = st.number_input(
                 "📏 ন্যূনতম ক্ষেত্রফল (sft)",
                 min_value=0,
@@ -749,17 +756,10 @@ def main():
                 step=100,
                 help="প্রয়োজনীয় ন্যূনতম ক্ষেত্রফল"
             )
-        
-        with col3:
             timeline = st.selectbox(
                 "⏰ সময়সীমা",
                 ["নমনীয়", "১-৩ মাস", "৩-৬ মাস", "৬+ মাস"],
                 help="আপনি কতদিনের মধ্যে কিনতে চান?"
-            )
-            urgency = st.selectbox(
-                "🚨 জরুরীতা",
-                ["জরুরী নয়", "কিছুটা জরুরী", "অত্যন্ত জরুরী"],
-                help="আপনার ক্রয়ের জরুরীতা কত?"
             )
         
         # Special Features
@@ -804,6 +804,7 @@ def main():
             user_criteria = {
                 'budget_range': f"{min_price:,} - {max_price:,} টাকা",
                 'property_type': property_type,
+                'listing_type': listing_type,
                 'bedrooms': bedrooms,
                 'bathrooms': bathrooms,
                 'min_area': min_area,
