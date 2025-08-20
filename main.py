@@ -1,3 +1,4 @@
+# app.py
 import os
 import streamlit as st
 import json
@@ -645,14 +646,14 @@ def main():
                 "Google AI API কী", 
                 value=DEFAULT_GOOGLE_API_KEY, 
                 type="password",
-                help="https://aistudio.google.com/app/apikey  থেকে আপনার API কী পান",
+                help="https://aistudio.google.com/app/apikey থেকে আপনার API কী পান",
                 placeholder="AIza..."
             )
             firecrawl_key = st.text_input(
                 "Firecrawl API কী", 
                 value=DEFAULT_FIRECRAWL_API_KEY, 
                 type="password",
-                help="https://firecrawl.dev  থেকে আপনার API কী পান",
+                help="https://firecrawl.dev থেকে আপনার API কী পান",
                 placeholder="fc_..."
             )
             
