@@ -1,38 +1,33 @@
-# AI Real Estate Agent Team for Bangladeshi Market
+# AI Real Estate Agent Team (Bangladesh)
 
-![AI Real Estate Agent]
-
-This application helps users find properties in Bangladesh by leveraging multiple AI agents that search, analyze, and evaluate properties from major Bangladeshi real estate websites.
+A multi-agent AI system for property search, market analysis, and valuation in the Bangladeshi real estate market.
 
 ## Features
+- 🔍 **Property Search Agent**: Scrapes listings from top Bangladeshi websites (Bproperty, Bdhousing, Bestbari, Aabason, Apexproperty, TheTolet) using Firecrawl
+- 📊 **Market Analysis Agent**: Provides insights on market trends and investment potential
+- 💰 **Property Valuation Agent**: Evaluates fair pricing and investment opportunities
+- 🏠 **Professional UI**: Clean, responsive interface built with Streamlit
+- 🔄 **Flexible Search**: Supports both buying and renting for various property types (House, Office, Flat, Land, etc.)
 
-- **Bangladeshi Property Market Focus**: Specifically designed for Bangladesh's real estate market
-- **Multi-Agent System**:
-  - Property Search Agent: Finds properties from Bangladeshi websites
-  - Market Analysis Agent: Provides insights on local market conditions
-  - Property Valuation Agent: Evaluates properties for investment potential
-- **Bilingual Support**: Works with both English and Bengali content
-- **User-Friendly UI**: Streamlit-based interface with professional property displays
+## Tech Stack
+- **Frontend**: Streamlit
+- **Backend**: Python, Agno Agent Framework
+- **LLM**: Google Gemini
+- **Web Scraping**: Firecrawl
+- **Data Modeling**: Pydantic
+- **Deployment**: Streamlit Cloud
 
-## Supported Bangladeshi Property Websites
+## Getting Started
 
-- Bikroy.com
-- Bproperty.com
-- AmarBari.com
-- Bdproperty.com
-- Chaldal Property
-- ShareBazar
+### 1. Set up API Keys
+1. Get your Google AI API Key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Get your Firecrawl API Key from [Firecrawl.dev](https://firecrawl.dev)
+3. Create a `.env` file with your keys
 
-## How to Run
+### 2. Run Locally
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-### Prerequisites
-
-1. **Google AI API Key**: Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. **Firecrawl API Key**: Get your API key from [Firecrawl](https://firecrawl.dev)
-
-### Setup Steps
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/ai_real_estate_agent_team.git
-   cd ai_real_estate_agent_team
+# Run the app
+streamlit run app.py
